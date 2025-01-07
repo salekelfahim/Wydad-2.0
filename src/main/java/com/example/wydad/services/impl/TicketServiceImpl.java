@@ -3,7 +3,6 @@ package com.example.wydad.services.impl;
 import com.example.wydad.entities.Ticket;
 import com.example.wydad.repositories.TicketRepository;
 import com.example.wydad.services.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
+
+    public TicketServiceImpl(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
 
     @Override
     public List<Ticket> getAllTickets() {

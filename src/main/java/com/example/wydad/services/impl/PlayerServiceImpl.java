@@ -3,7 +3,6 @@ package com.example.wydad.services.impl;
 import com.example.wydad.entities.Player;
 import com.example.wydad.repositories.PlayerRepository;
 import com.example.wydad.services.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
+
+    public PlayerServiceImpl(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     @Override
     public List<Player> getAllPlayers() {

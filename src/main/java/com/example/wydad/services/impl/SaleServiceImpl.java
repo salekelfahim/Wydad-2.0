@@ -13,7 +13,6 @@ public class SaleServiceImpl implements SaleService {
 
     private final SaleRepository saleRepository;
 
-    // Constructor injection
     public SaleServiceImpl(SaleRepository saleRepository) {
         this.saleRepository = saleRepository;
     }

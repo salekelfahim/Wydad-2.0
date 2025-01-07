@@ -3,7 +3,6 @@ package com.example.wydad.services.impl;
 import com.example.wydad.entities.News;
 import com.example.wydad.repositories.NewsRepository;
 import com.example.wydad.services.NewsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class NewsServiceImpl implements NewsService {
 
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
+
+    public NewsServiceImpl(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
+    }
 
     @Override
     public List<News> getAllNews() {
