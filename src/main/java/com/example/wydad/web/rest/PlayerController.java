@@ -3,11 +3,15 @@ package com.example.wydad.web.rest;
 import com.example.wydad.entities.Player;
 import com.example.wydad.services.PlayerService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
@@ -38,6 +42,32 @@ public class PlayerController {
     public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
         Player newPlayer = playerService.savePlayer(player);
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Player> createPlayerWithImage(
+            @RequestPart("player") Player player,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+        try {
+            Player newPlayer = playerService.savePlayerWithImage(player, image);
+            return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/{id}/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Player> updatePlayerWithImage(
+            @PathVariable Integer id,
+            @RequestPart("player") Player player,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+        try {
+            player.setId(id);
+            Player updatedPlayer = playerService.savePlayerWithImage(player, image);
+            return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")

@@ -4,11 +4,12 @@ import com.example.wydad.entities.enums.Size;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,8 @@ public class Product {
     private String type;
     private Integer quantity;
     private Float price;
+
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     private Size size;

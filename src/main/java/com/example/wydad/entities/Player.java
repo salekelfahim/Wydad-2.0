@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,8 @@ public class Player {
     private LocalDate birthday;
     private String nationality;
     private Integer number;
+
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     private Position position;
