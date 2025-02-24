@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PlayerService {
     List<Player> getAllPlayers();
     Optional<Player> getPlayerById(Integer id);
-    Player savePlayer(Player player);
-    Player savePlayerWithImage(Player player, MultipartFile image) throws IOException;
+    Player save(Player player);
+    Player savePlayer(Player player, MultipartFile image) throws IOException;
     void deletePlayer(Integer id);
 }

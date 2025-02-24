@@ -39,31 +39,31 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
-        Player newPlayer = playerService.savePlayer(player);
+    public ResponseEntity<Player> create(@RequestBody Player player) {
+        Player newPlayer = playerService.save(player);
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Player> createPlayerWithImage(
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Player> createPlayer(
             @RequestPart("player") Player player,
             @RequestPart(value = "image", required = false) MultipartFile image) {
         try {
-            Player newPlayer = playerService.savePlayerWithImage(player, image);
+            Player newPlayer = playerService.savePlayer(player, image);
             return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping(value = "/{id}/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Player> updatePlayerWithImage(
+    @PutMapping(value = "/{id}/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Player> updatePlayer(
             @PathVariable Integer id,
             @RequestPart("player") Player player,
             @RequestPart(value = "image", required = false) MultipartFile image) {
         try {
             player.setId(id);
-            Player updatedPlayer = playerService.savePlayerWithImage(player, image);
+            Player updatedPlayer = playerService.savePlayer(player, image);
             return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -3,6 +3,8 @@ package com.example.wydad.services.impl;
 import com.example.wydad.entities.Player;
 import com.example.wydad.repositories.PlayerRepository;
 import com.example.wydad.services.PlayerService;
+import com.example.wydad.web.exceptions.InvalidImageException;
+import com.example.wydad.web.exceptions.InvalidPlayerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,12 +41,38 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player savePlayer(Player player) {
+    public Player save(Player player) {
+        if (player == null) {
+            throw new InvalidPlayerException("Player object cannot be null");
+        }
+
+        if (player.getId() != null) {
+            throw new InvalidPlayerException("Cannot save player with existing ID. Use update method instead.");
+        }
+
+        if (player.getFirstName() == null || player.getFirstName().trim().isEmpty() ||
+                player.getLastName() == null || player.getLastName().trim().isEmpty()) {
+            throw new InvalidPlayerException("Player must have first name and last name");
+        }
+
         return playerRepository.save(player);
     }
 
     @Override
-    public Player savePlayerWithImage(Player player, MultipartFile image) throws IOException {
+    public Player savePlayer(Player player, MultipartFile image) throws IOException {
+        if (player == null) {
+            throw new InvalidPlayerException("Player object cannot be null");
+        }
+
+        if (player.getId() != null) {
+            throw new InvalidPlayerException("Cannot save player with existing ID. Use update method instead.");
+        }
+
+        if (player.getFirstName() == null || player.getFirstName().trim().isEmpty() ||
+                player.getLastName() == null || player.getLastName().trim().isEmpty()) {
+            throw new InvalidPlayerException("Player must have first name and last name");
+        }
+
         if (image != null && !image.isEmpty()) {
             File directory = new File(uploadDirectory);
             if (!directory.exists()) {
@@ -52,6 +80,10 @@ public class PlayerServiceImpl implements PlayerService {
             }
 
             String originalFilename = image.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) {
+                throw new InvalidImageException("Image filename is missing");
+            }
+
             String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
             String newFilename = UUID.randomUUID().toString() + fileExtension;
 
@@ -59,6 +91,8 @@ public class PlayerServiceImpl implements PlayerService {
             Files.write(filePath, image.getBytes());
 
             player.setPicture("/images/" + newFilename);
+        } else {
+            throw new InvalidImageException("Image file is required");
         }
 
         return playerRepository.save(player);

@@ -1,6 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/wydad
+#    url: jdbc:postgresql://host.docker.internal:5432/wydad
     username: GreenPulse
     password:
     driver-class-name: org.postgresql.Driver
