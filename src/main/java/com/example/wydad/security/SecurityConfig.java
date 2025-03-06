@@ -48,6 +48,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers("/api/feedbacks/**").permitAll()
                         .requestMatchers("/api/notifications/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

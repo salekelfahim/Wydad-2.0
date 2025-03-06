@@ -1,17 +1,19 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/wydad
-#    url: jdbc:postgresql://host.docker.internal:5432/wydad
     username: GreenPulse
     password:
     driver-class-name: org.postgresql.Driver
+
   liquibase:
     enabled: true
     change-log: db/changelog/master.yaml
+
   jpa:
     properties:
       hibernate:
         default_schema: public
+
   servlet:
     multipart:
       max-file-size: 10MB
@@ -19,9 +21,10 @@ spring:
 
   mvc:
     static-path-pattern: /images/**
+
   web:
     resources:
-      static-locations: file:uploads/images/
+      static-locations: file:${file.upload.directory}/
 
 file:
   upload:
