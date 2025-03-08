@@ -41,13 +41,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
-                        .requestMatchers("/api/hotels/**").permitAll()
+                        .requestMatchers("/api/games/**").permitAll()
                         .requestMatchers("/api/reservations/**").hasRole("ADMIN")
-                        .requestMatchers("/api/promotions/**").permitAll()
+                        .requestMatchers("/api/tickets/**").permitAll()
                         .requestMatchers("/api/rooms/**").permitAll()
                         .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers("/api/feedbacks/**").permitAll()
-                        .requestMatchers("/api/notifications/**").permitAll()
+                        .requestMatchers("/api/players/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

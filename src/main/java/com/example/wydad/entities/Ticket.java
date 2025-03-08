@@ -1,10 +1,14 @@
 package com.example.wydad.entities;
 
 import com.example.wydad.entities.enums.Category;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,5 +24,7 @@ public class Ticket {
     private Category category;
 
     @ManyToOne
+    @JoinColumn(name = "game_id")
+    @JsonIgnore
     private Game game;
 }
