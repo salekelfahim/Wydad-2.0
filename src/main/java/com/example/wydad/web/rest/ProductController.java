@@ -1,11 +1,14 @@
 package com.example.wydad.web.rest;
 
+import com.example.wydad.entities.Player;
 import com.example.wydad.entities.Product;
 import com.example.wydad.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,11 +38,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product newProduct = productService.saveProduct(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+    public ResponseEntity<Product> createProduct(
+            @RequestPart("product") Product product,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+        try {
+            Product newProduct = productService.saveProduct(product, image);
+            return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {

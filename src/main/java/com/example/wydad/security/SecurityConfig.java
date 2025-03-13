@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/games/**").permitAll()
                         .requestMatchers("/api/reservations/**").hasRole("ADMIN")
                         .requestMatchers("/api/tickets/**").permitAll()
-                        .requestMatchers("/api/rooms/**").permitAll()
+                        .requestMatchers("/api/products/**").permitAll()
                         .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers("/api/feedbacks/**").permitAll()
                         .requestMatchers("/api/players/**").permitAll()
