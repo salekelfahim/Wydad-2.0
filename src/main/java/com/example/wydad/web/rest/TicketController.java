@@ -47,13 +47,17 @@ public class TicketController {
     }
 
     @PostMapping
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+    public ResponseEntity<TicketDTO> createTicket(@RequestBody Ticket ticket) {
+        if (ticket.getGame() == null || ticket.getGame().getId() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Game game = gameService.getGameById(ticket.getGame().getId())
                 .orElseThrow(() -> new RuntimeException("Game not found with id: " + ticket.getGame().getId()));
         ticket.setGame(game);
 
         Ticket newTicket = ticketService.saveTicket(ticket);
-        return new ResponseEntity<>(newTicket, HttpStatus.CREATED);
+        return new ResponseEntity<>(ticketMapper.toDTO(newTicket), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

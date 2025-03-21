@@ -25,6 +25,6 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "game_id")
-    @JsonIgnore
+    @JsonBackReference
     private Game game;
 }

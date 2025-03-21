@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,7 +37,10 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<Game> createGame(@RequestBody Game game) {
-        System.out.println(game);
+        if (game.getTickets() == null) {
+            game.setTickets(new ArrayList<>());
+        }
+
         Game newGame = gameService.saveGame(game);
         return new ResponseEntity<>(newGame, HttpStatus.CREATED);
     }
