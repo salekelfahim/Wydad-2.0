@@ -36,6 +36,7 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<Game> createGame(@RequestBody Game game) {
+        System.out.println(game);
         Game newGame = gameService.saveGame(game);
         return new ResponseEntity<>(newGame, HttpStatus.CREATED);
     }
