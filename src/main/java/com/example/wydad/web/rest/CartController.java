@@ -60,8 +60,8 @@ public class CartController {
     }
 
     @PostMapping("/{userId}/checkout")
-    public ResponseEntity<Void> checkout(@PathVariable Integer userId) {
-        cartService.checkout(userId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> checkout(@PathVariable Integer userId) {
+        String message = cartService.checkout(userId);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

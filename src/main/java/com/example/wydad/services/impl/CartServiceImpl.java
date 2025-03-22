@@ -221,7 +221,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public Cart checkout(Integer userId) {
+    public String checkout(Integer userId) {
         User user = userService.getUserById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
 
@@ -230,6 +230,22 @@ public class CartServiceImpl implements CartService {
 
         if (cart.getItems().isEmpty()) {
             throw new IllegalStateException("Cannot checkout an empty cart");
+        }
+
+        for (CartItem item : cart.getItems()) {
+            if (item.getProduct() != null) {
+                Product product = item.getProduct();
+                if (product.getQuantity() < item.getQuantity()) {
+                    throw new InsufficientStockException("Not enough stock for product: " + product.getName() +
+                            ". Requested: " + item.getQuantity() + ", Available: " + product.getQuantity());
+                }
+            } else if (item.getTicket() != null) {
+                Ticket ticket = item.getTicket();
+                if (ticket.getQuantity() < item.getQuantity()) {
+                    throw new InsufficientStockException("Not enough tickets available for game: " + ticket.getGame().getOpponent() +
+                            ". Requested: " + item.getQuantity() + ", Available: " + ticket.getQuantity());
+                }
+            }
         }
 
         for (CartItem item : cart.getItems()) {
@@ -255,6 +271,8 @@ public class CartServiceImpl implements CartService {
         }
 
         cart.getItems().clear();
-        return cartRepository.save(cart);
+        cartRepository.save(cart);
+
+        return "Reservation successful! Your items have been reserved.";
     }
 }

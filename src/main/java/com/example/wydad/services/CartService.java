@@ -16,6 +16,6 @@ public interface CartService {
     void updateCartItemQuantity(Integer userId, Integer cartItemId, Double quantity);
     void clearCart(Integer userId);
     CartDTO getCartDetails(Integer userId);
-    Cart checkout(Integer userId);
+    String checkout(Integer userId);
     CartItem addToCart(Integer userId, AddToCartRequest request);
 }
