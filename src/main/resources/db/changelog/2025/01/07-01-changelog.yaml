@@ -1,0 +1,257 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1736258387151-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_game
+                  name: id
+                  type: INT
+              - column:
+                  name: date
+                  type: DATE
+              - column:
+                  name: time
+                  type: VARCHAR(255)
+              - column:
+                  name: opponent
+                  type: VARCHAR(255)
+              - column:
+                  name: competition
+                  type: VARCHAR(255)
+            tableName: game
+  - changeSet:
+      id: 1736258387151-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_news
+                  name: id
+                  type: INT
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+            tableName: news
+  - changeSet:
+      id: 1736258387151-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_player
+                  name: id
+                  type: INT
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: birthday
+                  type: DATE
+              - column:
+                  name: nationality
+                  type: VARCHAR(255)
+              - column:
+                  name: number
+                  type: INT
+              - column:
+                  name: position
+                  type: VARCHAR(255)
+            tableName: player
+  - changeSet:
+      id: 1736258387151-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_product
+                  name: id
+                  type: INT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  name: price
+                  type: FLOAT
+              - column:
+                  name: size
+                  type: VARCHAR(255)
+            tableName: product
+  - changeSet:
+      id: 1736258387151-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_sale
+                  name: id
+                  type: INT
+              - column:
+                  name: quantity
+                  type: DOUBLE
+              - column:
+                  name: user_id
+                  type: INT
+              - column:
+                  name: product_id
+                  type: INT
+              - column:
+                  name: ticket_id
+                  type: INT
+            tableName: sale
+  - changeSet:
+      id: 1736258387151-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_ticket
+                  name: id
+                  type: INT
+              - column:
+                  name: price
+                  type: FLOAT
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  name: category
+                  type: VARCHAR(255)
+              - column:
+                  name: game_id
+                  type: INT
+            tableName: ticket
+  - changeSet:
+      id: 1736258387151-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user
+                  name: id
+                  type: INT
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: user
+  - changeSet:
+      id: 1736258387151-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uc_user_email
+            tableName: user
+  - changeSet:
+      id: 1736258387151-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: sale
+            constraintName: FK_SALE_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: product
+  - changeSet:
+      id: 1736258387151-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ticket_id
+            baseTableName: sale
+            constraintName: FK_SALE_ON_TICKET
+            referencedColumnNames: id
+            referencedTableName: ticket
+  - changeSet:
+      id: 1736258387151-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: sale
+            constraintName: FK_SALE_ON_USER
+            referencedColumnNames: id
+            referencedTableName: user
+  - changeSet:
+      id: 1736258387151-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: game_id
+            baseTableName: ticket
+            constraintName: FK_TICKET_ON_GAME
+            referencedColumnNames: id
+            referencedTableName: game
+

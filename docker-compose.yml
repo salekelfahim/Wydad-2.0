@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: wydad-app
+    ports:
+      - "8089:8089"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/wydad
+      - SPRING_DATASOURCE_USERNAME=GreenPulse
+      - SPRING_DATASOURCE_PASSWORD=
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - wydad-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  wydad-network:
+    driver: bridge

@@ -7,6 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,5 +16,6 @@ public class News {
 
     private String title;
     private String content;
-}
 
+    private String cover;
+}

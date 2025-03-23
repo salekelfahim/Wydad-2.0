@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1742333320637-1
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cart
+                  name: id
+                  type: INT
+              - column:
+                  name: user_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: cart
+  - changeSet:
+      id: 1742333320637-2
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_cartitem
+                  name: id
+                  type: INT
+              - column:
+                  name: cart_id
+                  type: INT
+              - column:
+                  name: product_id
+                  type: INT
+              - column:
+                  name: ticket_id
+                  type: INT
+              - column:
+                  name: quantity
+                  type: DOUBLE
+            tableName: cart_item
+  - changeSet:
+      id: 1742333320637-3
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: cart_item
+            constraintName: FK_CARTITEM_ON_CART
+            referencedColumnNames: id
+            referencedTableName: cart
+  - changeSet:
+      id: 1742333320637-4
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: cart_item
+            constraintName: FK_CARTITEM_ON_PRODUCT
+            referencedColumnNames: id
+            referencedTableName: product
+  - changeSet:
+      id: 1742333320637-5
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ticket_id
+            baseTableName: cart_item
+            constraintName: FK_CARTITEM_ON_TICKET
+            referencedColumnNames: id
+            referencedTableName: ticket
+  - changeSet:
+      id: 1742333320637-6
+      author: Youcode
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: cart
+            constraintName: FK_CART_ON_USER
+            referencedColumnNames: id
+            referencedTableName: user
+
